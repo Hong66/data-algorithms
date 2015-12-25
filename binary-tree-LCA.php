@@ -36,6 +36,13 @@ class Generator
 
 class LCA 
 {
+	/**
+	 * [查找路径]
+	 * @param  [object] $root  [根节点]
+	 * @param  [path] 	&$path [路径]
+	 * @param  [int] 	$key   [节点值]
+	 * @return [bool]          [是否存在]
+	 */
 	public function findPath($root, &$path, $key)
 	{
 		if ( $root == null ) {
@@ -46,6 +53,7 @@ class LCA
 			return true;
 		}
 		// 递归
+		// 将这个步骤想像成找路, 找错了就返回到上一个节点
 		$find = ( $this->findPath($root->left, $path, $key) || $this->findPath($root->right, $path, $key) );
 
 		if ($find) {
@@ -55,6 +63,13 @@ class LCA
 		return false;
 	}
 
+	/**
+	 * [寻找 lowest common ancestor 方法一]
+	 * @param  [object] $root [根节点]
+	 * @param  [int] $key1 [node1 的值]
+	 * @param  [int] $key2 [node2 的值]
+	 * @return [int]       [LCA 值]
+	 */
 	public function findLCA($root, $key1, $key2)
 	{
 		$path1 = array();
@@ -75,6 +90,31 @@ class LCA
 		}
 		return -1;
 	}
+
+	/**
+	 * [寻找 lowest common ancestor 方法二 , 简单但有局限]
+	 * @param  [type] $root [description]
+	 * @param  [type] $key1 [description]
+	 * @param  [type] $key2 [description]
+	 * @return [type]       [description]
+	 */
+	public function findLCA2($root, $key1, $key2) 
+	{
+		if ($root == null) {
+			return null;
+		}
+		if ($root->key == $key1 || $root->key == $key2) {
+			return $root;
+		}
+		$left_lca = $this->findLCA2($root->left, $key1, $key2);
+		$right_lca = $this->findLCA2($root->right, $key1, $key2);
+
+		if ($left_lca && $right_lca) {
+			return $root;
+		}
+
+		return ($left_lca != null) ? $left_lca : $right_lca;
+	}
 }
 
 // 创建测试用的二叉树
@@ -90,7 +130,12 @@ $root->right->right = $Generator->createNode(7);
 // 测试示例
 $LCA = new LCA();
 
-echo "LCA(4,5) = ".$LCA->findLCA($root, 4, 5);
+echo "LCA(4,5) = ". $LCA->findLCA($root, 4, 5).PHP_EOL;
+
+$res = $LCA->findLCA2($root, 2, 4);
+echo "LCA(2,4) = ".$res->key;
+
+
 
 
 ?>
