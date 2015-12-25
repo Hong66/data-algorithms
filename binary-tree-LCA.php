@@ -115,6 +115,42 @@ class LCA
 
 		return ($left_lca != null) ? $left_lca : $right_lca;
 	}
+
+	/**
+	 * [节点是否在树中]
+	 * @param  [object]  $root [根节点对象]
+	 * @param  [int]  $key [节点值]
+	 * @return boolean       [是否存在]
+	 */
+	public function isNodeExist($root, $key)
+	{
+		if ($root == null) return false;
+		if ($root->key == $key) {
+			return true;
+		}
+
+		$left_sub = $this->isNodeExist($root->left, $key);
+		$right_sub = $this->isNodeExist($root->right, $key);
+
+		if ($left_sub || $right_sub) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public function checkKeys($root, $key1, $key2)
+	{
+		$e_key1 = $this->isNodeExist($root, $key1);
+		$e_key2 = $this->isNodeExist($root, $key2);
+		//try {
+			if (!$e_key1 || !$e_key2) {
+				throw new Exception('You must insure the nodes you giving is in the binary-tree');
+			}
+		//} catch(Exception $e) {
+		//	echo  'Message'. $e->getMessage();
+		//}
+	}
 }
 
 // 创建测试用的二叉树
@@ -130,10 +166,10 @@ $root->right->right = $Generator->createNode(7);
 // 测试示例
 $LCA = new LCA();
 
-echo "LCA(4,5) = ". $LCA->findLCA($root, 4, 5).PHP_EOL;
-
-$res = $LCA->findLCA2($root, 2, 4);
-echo "LCA(2,4) = ".$res->key;
+//echo "LCA(4,5) = ". $LCA->findLCA($root, 4, 5).PHP_EOL;
+$LCA->checkKeys($root, 4, 5);
+$res = $LCA->findLCA2($root, 4, 5);
+echo "LCA(4,5) = ".$res->key;
 
 
 
