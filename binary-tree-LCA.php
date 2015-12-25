@@ -21,8 +21,8 @@ class Generator
 {
 	/**
 	 * [创建一个新的节点]
-	 * @param  [int] 	$key 	[ 节点的值 ]
-	 * @return [object] $node   [ 返回一个新的节点 ]
+	 * @param  [int] $key [ 节点的值 ]
+	 * @return [object] $node [ 返回一个新的节点 ]
 	 */
 	public function createNode($key)
 	{
@@ -38,10 +38,10 @@ class LCA
 {
 	/**
 	 * [查找路径]
-	 * @param  [object] $root  [根节点]
-	 * @param  [path] 	&$path [路径]
-	 * @param  [int] 	$key   [节点值]
-	 * @return [bool]          [是否存在]
+	 * @param  [object] $root [根节点]
+	 * @param  [path] &$path [路径]
+	 * @param  [int] $key [节点值]
+	 * @return [bool]     [是否存在]
 	 */
 	public function findPath($root, &$path, $key)
 	{
@@ -93,10 +93,10 @@ class LCA
 
 	/**
 	 * [寻找 lowest common ancestor 方法二 , 简单但有局限]
-	 * @param  [type] $root [description]
-	 * @param  [type] $key1 [description]
-	 * @param  [type] $key2 [description]
-	 * @return [type]       [description]
+	 * @param  [object] $root [根节点对象]
+	 * @param  [int] $key1 [node1 的值]
+	 * @param  [int] $key2 [node2 的值]
+	 * @return [object]       [LCA 节点]
 	 */
 	public function findLCA2($root, $key1, $key2) 
 	{
